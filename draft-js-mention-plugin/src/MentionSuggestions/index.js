@@ -153,6 +153,42 @@ export class MentionSuggestions extends Component {
          && anchorOffset <= end) // @ is in the text or at the end
       ));
 
+    const activePortal = leaves.get(this.activeOffsetKey);
+    // Check if next characted after mention is space, then try to autoselect
+    // mention from list
+    if (activePortal !== undefined && activePortal.end === anchorOffset - 1) {
+      const currentBlockText = editorState.getCurrentContent().getBlockForKey(anchorKey).getText();
+      const textAfterPortal = currentBlockText.slice(activePortal.end, anchorOffset);
+      const portalSelectionText = currentBlockText.slice(activePortal.start, activePortal.end);
+      let mention;
+
+      if (/^\s+$/.test(textAfterPortal)) {
+        mention = this.mentionAutoSelect(portalSelectionText);
+      }
+
+      if (mention !== undefined) {
+        if (this.props.onAddMention) {
+          this.props.onAddMention(mention);
+        }
+
+        this.closeDropdown();
+        const newEditorState = addMention(
+          this.props.store.getEditorState(),
+          mention,
+          this.props.mentionPrefix,
+          this.props.mentionTrigger,
+          this.props.entityMutability,
+        );
+
+        this.props.store.resetEscapedSearch();
+        this.setState({
+          focusedOptionIndex: 0,
+        });
+
+        return newEditorState;
+      }
+    }
+
     if (selectionIsInsideWord.every((isInside) => isInside === false)) return removeList();
 
     const lastActiveOffsetKey = this.activeOffsetKey;
@@ -273,6 +309,18 @@ export class MentionSuggestions extends Component {
 
     this.onMentionSelect(this.props.suggestions.get(this.state.focusedOptionIndex));
     return 'handled';
+  };
+
+  // try to preselect mention from provided text from mention suggestion portal
+  mentionAutoSelect = (text) => {
+    const reg = new RegExp(String.raw({
+      raw: `(^\\s|^)${escapeRegExp(this.props.mentionTrigger)}` // eslint-disable-line no-useless-escape
+    }));
+    const mentionTextLowered = text.replace(reg, '').toLowerCase();
+    return this.props.suggestions
+      .find((possibleMention) => (
+        possibleMention.get('name').toLowerCase() === mentionTextLowered
+      ));
   };
 
   openDropdown = () => {
