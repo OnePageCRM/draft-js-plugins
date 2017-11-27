@@ -13,7 +13,7 @@ import suggestionsFilter from './utils/defaultSuggestionsFilter';
 import defaultPositionSuggestions from './utils/positionSuggestions';
 
 export { default as MentionSuggestions } from './MentionSuggestions';
-export { default as defaultPositionSuggestions }  from './utils/positionSuggestions';
+export { defaultPositionSuggestions };
 
 export default (config = {}) => {
   const defaultTheme = {
