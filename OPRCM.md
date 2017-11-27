@@ -16,13 +16,13 @@ Repo of [draft-js-plugins](https://github.com/OnePageCRM/draft-js-plugins) is mo
 
 ## Releasing
 
-1. Build plugin in `opcrm` branch by running `cd draft-js-mention-plugin` and `npm pack`. Output file will be:
+1. Change only local version number after opcrm suffix, for example,  next release will be v2.0.1-opcrm.1, update `package.json`
+2. Build plugin in `opcrm` branch by running `cd draft-js-mention-plugin` and `npm pack`. Output file will be:
     ```
-    draft-js-mention-plugin-2.0.1.tgz
+    draft-js-mention-plugin-2.0.1-opcrm.1.tgz
     ```
-2. Publish this file in [release](https://github.com/OnePageCRM/draft-js-plugins/releases) with tagging branch `opcrm` with tag `v2.0.1-opcrm.X`
-3. Change only local version number after opcrm suffix, for next release it will be v2.0.1-opcrm.1
+3. Publish this file in [release](https://github.com/OnePageCRM/draft-js-plugins/releases) with tagging branch `opcrm` with tag `v2.0.1-opcrm.X`
 4. Include in project dependencies in `package.json` release file:
 ``` js
- "draft-js-mention-plugin": "https://github.com/OnePageCRM/draft-js-plugins/releases/download/v2.0.1-opcrm/draft-js-mention-plugin-2.0.1.tgz"
+ "draft-js-mention-plugin": "https://github.com/OnePageCRM/draft-js-plugins/releases/download/v2.0.1-opcrm.1/draft-js-mention-plugin-2.0.1-opcrm.1.tgz"
 ```
