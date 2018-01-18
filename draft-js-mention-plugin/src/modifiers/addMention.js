@@ -17,6 +17,9 @@ const addMention = (editorState, mention, mentionPrefix, mentionTrigger, entityM
     focusOffset: end,
   });
 
+  // save inline style
+  const currentInlineStyle = editorState.getCurrentInlineStyle();
+
   let mentionReplacedContent = Modifier.replaceText(
     editorState.getCurrentContent(),
     mentionTextSelection,
@@ -42,7 +45,10 @@ const addMention = (editorState, mention, mentionPrefix, mentionTrigger, entityM
     mentionReplacedContent,
     'insert-mention',
   );
-  return EditorState.forceSelection(newEditorState, mentionReplacedContent.getSelectionAfter());
+
+  const newEditorStateWithSelection = EditorState.forceSelection(newEditorState, mentionReplacedContent.getSelectionAfter());
+
+  return EditorState.setInlineStyleOverride(newEditorStateWithSelection, currentInlineStyle);
 };
 
 export default addMention;
