@@ -11,6 +11,8 @@ const addMention = (editorState, mention, mentionPrefix, mentionTrigger, entityM
   const currentSelectionState = editorState.getSelection();
   const { begin, end } = getSearchText(editorState, currentSelectionState, mentionTrigger);
 
+  const alwaysAddSpace = true;
+
   // get selection of the @mention search text
   const mentionTextSelection = currentSelectionState.merge({
     anchorOffset: begin,
@@ -32,7 +34,7 @@ const addMention = (editorState, mention, mentionPrefix, mentionTrigger, entityM
   // a smooth writing experience.
   const blockKey = mentionTextSelection.getAnchorKey();
   const blockSize = editorState.getCurrentContent().getBlockForKey(blockKey).getLength();
-  if (blockSize === end) {
+  if (alwaysAddSpace || blockSize === end) {
     mentionReplacedContent = Modifier.insertText(
       mentionReplacedContent,
       mentionReplacedContent.getSelectionAfter(),
