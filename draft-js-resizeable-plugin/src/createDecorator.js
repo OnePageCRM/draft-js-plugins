@@ -175,7 +175,6 @@ export default ({ config, store }) => (WrappedComponent) => class BlockResizeabl
     } else {
       styles.height = `${usingHeight}${heightUnits}`
     }
-    console.log(`using width ${styles.width} and height ${styles.width}`)
 
     // Handle cursor
     if ((isRight && isBottom) || (isLeft && isTop)) {
