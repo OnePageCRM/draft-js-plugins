@@ -146,21 +146,36 @@ export default ({ config, store }) => (WrappedComponent) => class BlockResizeabl
 
     const styles = { position: 'relative', ...style };
 
-    if (horizontal === 'auto') {
-      styles.width = 'auto';
-    } else if (horizontal === 'relative') {
-      styles.width = `${(width || blockProps.resizeData.width || 40)}%`;
-    } else if (horizontal === 'absolute') {
-      styles.width = `${(width || blockProps.resizeData.width || 40)}px`;
+    const usingWidth = width || blockProps.resizeData.width || 'auto';
+    let widthUnits = '';
+    switch (horizontal) {
+      case 'relative':
+        widthUnits = '%';
+      case 'absolute':
+        widthUnits = 'px';
     }
 
-    if (vertical === 'auto') {
-      styles.height = 'auto';
-    } else if (vertical === 'relative') {
-      styles.height = `${(height || blockProps.resizeData.height || 40)}%`;
-    } else if (vertical === 'absolute') {
-      styles.height = `${(height || blockProps.resizeData.height || 40)}px`;
+    if (horizontal === 'auto' || usingWidth === 'auto') {
+      styles.width = 'auto';
+    } else {
+      styles.width = `${usingWidth}${widthUnits}`;
     }
+
+    const usingHeight = height || blockProps.resizeData.height || 'auto';
+    let heightUnits = '';
+    switch (vertical) {
+      case 'relative':
+        heightUnits = '%'
+      case 'absolute':
+        heightUnits = 'px'
+    }
+
+    if (vertical === 'auto' || usingHeight === 'auto') {
+      styles.height = 'auto';
+    } else {
+      styles.height = `${usingHeight}${heightUnits}`
+    }
+    console.log(`using width ${styles.width} and height ${styles.width}`)
 
     // Handle cursor
     if ((isRight && isBottom) || (isLeft && isTop)) {
