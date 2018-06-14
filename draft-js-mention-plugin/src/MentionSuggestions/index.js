@@ -154,10 +154,16 @@ export class MentionSuggestions extends Component {
       ));
 
     const activePortal = leaves.get(this.activeOffsetKey);
+    const currentBlock = editorState.getCurrentContent().getBlockForKey(anchorKey);
+    let entityExists = false;
+    if (activePortal !== undefined) {
+      entityExists = currentBlock.getEntityAt(activePortal.start) || currentBlock.getEntityAt(activePortal.end - 1);
+    }
+
     // Check if next characted after mention is space, then try to autoselect
     // mention from list
-    if (activePortal !== undefined && activePortal.end === anchorOffset - 1) {
-      const currentBlockText = editorState.getCurrentContent().getBlockForKey(anchorKey).getText();
+    if (activePortal !== undefined && activePortal.end === anchorOffset - 1 && !entityExists) {
+      const currentBlockText = currentBlock.getText();
       const textAfterPortal = currentBlockText.slice(activePortal.end, anchorOffset);
       const portalSelectionText = currentBlockText.slice(activePortal.start, activePortal.end);
       let mention;
