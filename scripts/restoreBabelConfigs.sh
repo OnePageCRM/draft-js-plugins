@@ -9,6 +9,7 @@ mv $(pwd)/../draft-js-drag-n-drop-plugin/tmpBabelrc $(pwd)/../draft-js-drag-n-dr
 mv $(pwd)/../draft-js-drag-n-drop-upload-plugin/tmpBabelrc $(pwd)/../draft-js-drag-n-drop-upload-plugin/.babelrc
 mv $(pwd)/../draft-js-alignment-plugin/tmpBabelrc $(pwd)/../draft-js-alignment-plugin/.babelrc
 mv $(pwd)/../draft-js-focus-plugin/tmpBabelrc $(pwd)/../draft-js-focus-plugin/.babelrc
+mv $(pwd)/../draft-js-plugins-utils/tmpBabelrc $(pwd)/../draft-js-plugins-utils/.babelrc
 mv $(pwd)/../draft-js-resizeable-plugin/tmpBabelrc $(pwd)/../draft-js-resizeable-plugin/.babelrc
 mv $(pwd)/../draft-js-inline-toolbar-plugin/tmpBabelrc $(pwd)/../draft-js-inline-toolbar-plugin/.babelrc
 mv $(pwd)/../draft-js-static-toolbar-plugin/tmpBabelrc $(pwd)/../draft-js-static-toolbar-plugin/.babelrc
@@ -18,3 +19,4 @@ mv $(pwd)/../draft-js-image-plugin/tmpBabelrc $(pwd)/../draft-js-image-plugin/.b
 mv $(pwd)/../draft-js-buttons/tmpBabelrc $(pwd)/../draft-js-buttons/.babelrc
 mv $(pwd)/../draft-js-video-plugin/tmpBabelrc $(pwd)/../draft-js-video-plugin/.babelrc
 mv $(pwd)/../draft-js-anchor-plugin/tmpBabelrc $(pwd)/../draft-js-anchor-plugin/.babelrc
+mv $(pwd)/../draft-js-divider-plugin/tmpBabelrc $(pwd)/../draft-js-divider-plugin/.babelrc

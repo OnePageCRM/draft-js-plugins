@@ -60,7 +60,7 @@ export default class App extends Component {
           <p>
             The plugin ships with a default styling available at this location in the installed package:
             &nbsp;
-            <InlineCode code={'node_modules/draft-js-alignment-plugin/lib/plugin.css'} />
+            <InlineCode code={'node_modules/draft-js-focus-plugin/lib/plugin.css'} />
           </p>
           <Heading level={4}>Webpack Usage</Heading>
           <ul className={styles.list}>
@@ -88,6 +88,20 @@ export default class App extends Component {
         </AlternateContainer>
         <Container>
           <Heading level={2}>Configuration Parameters</Heading>
+          <div className={styles.param}>
+            <span className={styles.paramName}>theme</span>
+            <span>Object of CSS classes with the following keys:</span>
+            <div className={styles.subParams}>
+              <div className={styles.subParam}>
+                <span className={styles.subParamName}>focused:</span>
+                CSS class for the focused item.
+              </div>
+              <div className={styles.subParam}>
+                <span className={styles.subParamName}>unfocused:</span>
+                CSS class for the unfocused item.
+              </div>
+            </div>
+          </div>
         </Container>
         <Container>
           <Heading level={2}>Simple Focus Example</Heading>

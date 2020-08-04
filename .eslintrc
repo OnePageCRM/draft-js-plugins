@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "plugins": [ "mocha" ],
+  "plugins": ["mocha"],
   "env": {
     "browser": true,
     "mocha": true,
@@ -8,9 +8,25 @@
   },
   "extends": "airbnb",
   "rules": {
-    "arrow-parens": ["error", "always"],
+    "no-multi-spaces": 0,
+    "padded-blocks": 0,
+    "camelcase": 0,
+    "react/sort-comp": 0,
+    "no-cond-assign": 0,
+    "react/no-did-update-set-state": 0,
+    "no-restricted-syntax": 0,
+    "no-lonely-if": 0,
+    "no-prototype-builtins": 0,
+    "spaced-comment": 0,
+    "space-before-function-paren": 0,
+    "no-confusing-arrow": 0,
+    "no-mixed-operators": 0,
+    "indent": 0,
+    "curly": 0,
     "max-len": 0,
     "comma-dangle": 0,
+    "arrow-parens": 0,
+    "no-underscore-dangle": 0,
     "new-cap": 0,
     "react/prop-types": 0,
     "react/forbid-prop-types": 0,
@@ -23,7 +39,7 @@
     "import/no-webpack-loader-syntax": 0,
     "import/extensions": 0,
     "jsx-a11y/img-has-alt": 0,
-    "react/require-default-props": 0,
+    "react/require-default-props": 0
   },
   "settings": {
     "import/core-modules": [
@@ -35,6 +51,7 @@
       "draft-js-buttons/lib/plugin.css",
       "draft-js-counter-plugin",
       "draft-js-counter-plugin/lib/plugin.css",
+      "draft-js-plugins-utils",
       "draft-js-drag-n-drop-plugin",
       "draft-js-drag-n-drop-plugin/lib/plugin.css",
       "draft-js-drag-n-drop-upload-plugin",
@@ -67,7 +84,9 @@
       "draft-js-undo-plugin",
       "draft-js-undo-plugin/lib/plugin.css",
       "draft-js-video-plugin",
-      "draft-js-video-plugin/lib/plugin.css"
+      "draft-js-video-plugin/lib/plugin.css",
+      "draft-js-divider-plugin",
+      "draft-js-divider-plugin/lib/plugin.css"
     ]
   }
 }

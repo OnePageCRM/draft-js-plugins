@@ -59,6 +59,11 @@ npm install
 npm publish
 rm -rf node_modules
 cd ..
+cd draft-js-plugins-utils
+npm install
+npm publish
+rm -rf node_modules
+cd ..
 cd draft-js-sticker-plugin
 npm publish
 cd ..
@@ -66,5 +71,8 @@ cd draft-js-undo-plugin
 npm publish
 cd ..
 cd draft-js-video-plugin
+npm publish
+cd ..
+cd draft-js-divider-plugin
 npm publish
 cd ..

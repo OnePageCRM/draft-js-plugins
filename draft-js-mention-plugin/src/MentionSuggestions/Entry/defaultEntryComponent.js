@@ -1,10 +1,11 @@
 import React from 'react';
 import Avatar from './Avatar';
 
-const defaultEntryComponent = (props) => {
+const defaultEntryComponent = props => {
   const {
     mention,
     theme,
+    isFocused, // eslint-disable-line no-unused-vars
     searchValue, // eslint-disable-line no-unused-vars
     ...parentProps
   } = props;
@@ -12,7 +13,7 @@ const defaultEntryComponent = (props) => {
   return (
     <div {...parentProps}>
       <Avatar mention={mention} theme={theme} />
-      <span className={theme.mentionSuggestionsEntryText}>{mention.get('name')}</span>
+      <span className={theme.mentionSuggestionsEntryText}>{mention.name}</span>
     </div>
   );
 };
