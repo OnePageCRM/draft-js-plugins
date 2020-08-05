@@ -127,18 +127,32 @@ export class MentionSuggestions extends Component {
       );
 
     const activePortal = leaves.get(this.activeOffsetKey);
-    const currentBlock = editorState.getCurrentContent().getBlockForKey(anchorKey);
+    const currentBlock = editorState
+      .getCurrentContent()
+      .getBlockForKey(anchorKey);
     let entityExists = false;
     if (activePortal !== undefined) {
-      entityExists = currentBlock.getEntityAt(activePortal.start) || currentBlock.getEntityAt(activePortal.end - 1);
+      entityExists =
+        currentBlock.getEntityAt(activePortal.start) ||
+        currentBlock.getEntityAt(activePortal.end - 1);
     }
 
     // Check if next characted after mention is space, then try to autoselect
     // mention from list
-    if (activePortal !== undefined && activePortal.end === anchorOffset - 1 && !entityExists) {
+    if (
+      activePortal !== undefined &&
+      activePortal.end === anchorOffset - 1 &&
+      !entityExists
+    ) {
       const currentBlockText = currentBlock.getText();
-      const textAfterPortal = currentBlockText.slice(activePortal.end, anchorOffset);
-      const portalSelectionText = currentBlockText.slice(activePortal.start, activePortal.end);
+      const textAfterPortal = currentBlockText.slice(
+        activePortal.end,
+        anchorOffset
+      );
+      const portalSelectionText = currentBlockText.slice(
+        activePortal.start,
+        activePortal.end
+      );
       let mention;
 
       if (/^\s+$/.test(textAfterPortal)) {
@@ -156,7 +170,7 @@ export class MentionSuggestions extends Component {
           mention,
           this.props.mentionPrefix,
           this.props.mentionTrigger,
-          this.props.entityMutability,
+          this.props.entityMutability
         );
 
         this.props.store.resetEscapedSearch();
@@ -241,7 +255,10 @@ export class MentionSuggestions extends Component {
   onDownArrow = keyboardEvent => {
     keyboardEvent.preventDefault();
     const newIndex = this.state.focusedOptionIndex + 1;
-    this.onMentionFocus(newIndex >= this.props.suggestions.length ? 0 : newIndex, true);
+    this.onMentionFocus(
+      newIndex >= this.props.suggestions.length ? 0 : newIndex,
+      true
+    );
   };
 
   onTab = keyboardEvent => {
@@ -253,7 +270,10 @@ export class MentionSuggestions extends Component {
     keyboardEvent.preventDefault();
     if (this.props.suggestions.length > 0) {
       const newIndex = this.state.focusedOptionIndex - 1;
-      this.onMentionFocus(newIndex < 0 ? this.props.suggestions.length - 1 : newIndex, true);
+      this.onMentionFocus(
+        newIndex < 0 ? this.props.suggestions.length - 1 : newIndex,
+        true
+      );
     }
   };
 
@@ -298,7 +318,7 @@ export class MentionSuggestions extends Component {
     this.props.ariaProps.ariaActiveDescendantID = descendant;
     this.setState({
       focusedOptionIndex: index,
-      focusedByArrow
+      focusedByArrow,
     });
 
     // to force a re-render of the outer component to change the aria props
@@ -315,15 +335,17 @@ export class MentionSuggestions extends Component {
   };
 
   // try to preselect mention from provided text from mention suggestion portal
-  mentionAutoSelect = (text) => {
-    const reg = new RegExp(String.raw({
-      raw: `(^\\s|^)${escapeRegExp(this.props.mentionTrigger)}` // eslint-disable-line no-useless-escape
-    }));
+  mentionAutoSelect = text => {
+    const reg = new RegExp(
+      String.raw({
+        raw: `(^\\s|^)${escapeRegExp(this.props.mentionTrigger)}`, // eslint-disable-line no-useless-escape
+      })
+    );
     const mentionTextLowered = text.replace(reg, '').toLowerCase();
-    return this.props.suggestions
-      .find((possibleMention) => (
-        possibleMention.get('name').toLowerCase() === mentionTextLowered
-      ));
+    return this.props.suggestions.find(
+      possibleMention =>
+        possibleMention.name.toLowerCase() === mentionTextLowered
+    );
   };
 
   openDropdown = () => {
@@ -410,7 +432,9 @@ export class MentionSuggestions extends Component {
           onMentionSelect={this.onMentionSelect}
           onMentionFocus={this.onMentionFocus}
           isFocused={this.state.focusedOptionIndex === index}
-          isFocusedByArrow={this.state.focusedByArrow && this.state.focusedOptionIndex === index}
+          isFocusedByArrow={
+            this.state.focusedByArrow && this.state.focusedOptionIndex === index
+          }
           mention={mention}
           index={index}
           id={`mention-option-${this.key}-${index}`}
