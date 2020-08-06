@@ -167,6 +167,7 @@ export default ({ config, store }) => WrappedComponent =>
         vertical,
         horizontal,
         style,
+        preventScroll,
         // using destructuring to make sure unused props are not passed down to the block
         resizeSteps, // eslint-disable-line no-unused-vars
         ...elementProps
@@ -184,12 +185,16 @@ export default ({ config, store }) => WrappedComponent =>
       //   styles.width = `${width || blockProps.resizeData.width || 40}px`;
       // }
       const usingWidth = width || blockProps.resizeData.width || 'auto';
-      let widthUnits = '';
+      let widthUnits;
       switch (horizontal) {
         case 'relative':
           widthUnits = '%';
+          break;
         case 'absolute':
           widthUnits = 'px';
+          break;
+        default:
+          widthUnits = '';
       }
 
       if (horizontal === 'auto' || usingWidth === 'auto') {
@@ -207,18 +212,22 @@ export default ({ config, store }) => WrappedComponent =>
       // }
 
       const usingHeight = height || blockProps.resizeData.height || 'auto';
-      let heightUnits = '';
+      let heightUnits;
       switch (vertical) {
         case 'relative':
-          heightUnits = '%'
+          heightUnits = '%';
+          break;
         case 'absolute':
-          heightUnits = 'px'
+          heightUnits = 'px';
+          break;
+        default:
+          heightUnits = '';
       }
 
       if (vertical === 'auto' || usingHeight === 'auto') {
         styles.height = 'auto';
       } else {
-        styles.height = `${usingHeight}${heightUnits}`
+        styles.height = `${usingHeight}${heightUnits}`;
       }
 
       // Handle cursor
