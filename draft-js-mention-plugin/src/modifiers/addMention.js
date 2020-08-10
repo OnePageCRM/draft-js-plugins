@@ -62,15 +62,16 @@ const addMention = (
     mentionReplacedContent,
     'insert-mention'
   );
-  // return EditorState.forceSelection(
-  //   newEditorState,
-  //   mentionReplacedContent.getSelectionAfter()
-  // );
 
-  const newEditorStateWithSelection = EditorState.forceSelection(newEditorState, mentionReplacedContent.getSelectionAfter());
+  const newEditorStateWithSelection = EditorState.forceSelection(
+    newEditorState,
+    mentionReplacedContent.getSelectionAfter()
+  );
 
-  return EditorState.setInlineStyleOverride(newEditorStateWithSelection, currentInlineStyle);
-
+  return EditorState.setInlineStyleOverride(
+    newEditorStateWithSelection,
+    currentInlineStyle
+  );
 };
 
 export default addMention;
