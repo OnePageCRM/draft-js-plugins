@@ -11,13 +11,13 @@ Repo of [draft-js-plugins](https://github.com/OnePageCRM/draft-js-plugins) is mo
     ``` js
      "draft-js-mention-plugin": "/home/user/work/draft-js-plugins/draft-js-mention-plugin"
     ```
-5. After making changes to test it run `npm run build` in plugin dir and `npm install` in project.
+5. After making changes to test it run `yarn build` in plugin dir and `npm install` in project.
 6. Merge changes to `opcrm`
 
 ## Releasing
 
 1. Change only local version number after opcrm suffix, for example,  next release will be v2.0.1-opcrm.1, update `package.json`
-2. Build plugin in `opcrm` branch by running `cd draft-js-mention-plugin` and `npm pack`. Output file will be:
+2. Build plugin in `opcrm` branch by running `cd draft-js-mention-plugin` and `yarn pack`. Output file will be:
     ```
     draft-js-mention-plugin-2.0.1-opcrm.1.tgz
     ```
