@@ -11,6 +11,7 @@ import defaultPositionSuggestions from './utils/positionSuggestions';
 import { defaultTheme } from './theme.js';
 
 export { default as MentionSuggestions } from './MentionSuggestions';
+export { defaultPositionSuggestions };
 
 export { defaultTheme };
 

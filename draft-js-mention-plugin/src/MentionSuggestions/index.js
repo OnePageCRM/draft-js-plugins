@@ -126,6 +126,62 @@ export class MentionSuggestions extends Component {
             anchorOffset <= end) // @ is in the text or at the end
       );
 
+    const activePortal = leaves.get(this.activeOffsetKey);
+    const currentBlock = editorState
+      .getCurrentContent()
+      .getBlockForKey(anchorKey);
+    let entityExists = false;
+    if (activePortal !== undefined) {
+      entityExists =
+        currentBlock.getEntityAt(activePortal.start) ||
+        currentBlock.getEntityAt(activePortal.end - 1);
+    }
+
+    // Check if next characted after mention is space, then try to autoselect
+    // mention from list
+    if (
+      activePortal !== undefined &&
+      activePortal.end === anchorOffset - 1 &&
+      !entityExists
+    ) {
+      const currentBlockText = currentBlock.getText();
+      const textAfterPortal = currentBlockText.slice(
+        activePortal.end,
+        anchorOffset
+      );
+      const portalSelectionText = currentBlockText.slice(
+        activePortal.start,
+        activePortal.end
+      );
+      let mention;
+
+      if (/^\s+$/.test(textAfterPortal)) {
+        mention = this.mentionAutoSelect(portalSelectionText);
+      }
+
+      if (mention !== undefined) {
+        if (this.props.onAddMention) {
+          this.props.onAddMention(mention);
+        }
+
+        this.closeDropdown();
+        const newEditorState = addMention(
+          this.props.store.getEditorState(),
+          mention,
+          this.props.mentionPrefix,
+          this.props.mentionTrigger,
+          this.props.entityMutability
+        );
+
+        this.props.store.resetEscapedSearch();
+        this.setState({
+          focusedOptionIndex: 0,
+        });
+
+        return newEditorState;
+      }
+    }
+
     if (selectionIsInsideWord.every(isInside => isInside === false))
       return removeList();
 
@@ -200,7 +256,8 @@ export class MentionSuggestions extends Component {
     keyboardEvent.preventDefault();
     const newIndex = this.state.focusedOptionIndex + 1;
     this.onMentionFocus(
-      newIndex >= this.props.suggestions.length ? 0 : newIndex
+      newIndex >= this.props.suggestions.length ? 0 : newIndex,
+      true
     );
   };
 
@@ -214,7 +271,8 @@ export class MentionSuggestions extends Component {
     if (this.props.suggestions.length > 0) {
       const newIndex = this.state.focusedOptionIndex - 1;
       this.onMentionFocus(
-        newIndex < 0 ? this.props.suggestions.length - 1 : newIndex
+        newIndex < 0 ? this.props.suggestions.length - 1 : newIndex,
+        true
       );
     }
   };
@@ -255,11 +313,12 @@ export class MentionSuggestions extends Component {
     this.props.store.setEditorState(newEditorState);
   };
 
-  onMentionFocus = index => {
+  onMentionFocus = (index, focusedByArrow = false) => {
     const descendant = `mention-option-${this.key}-${index}`;
     this.props.ariaProps.ariaActiveDescendantID = descendant;
     this.setState({
       focusedOptionIndex: index,
+      focusedByArrow,
     });
 
     // to force a re-render of the outer component to change the aria props
@@ -273,6 +332,20 @@ export class MentionSuggestions extends Component {
 
     this.onMentionSelect(this.props.suggestions[this.state.focusedOptionIndex]);
     return 'handled';
+  };
+
+  // try to preselect mention from provided text from mention suggestion portal
+  mentionAutoSelect = text => {
+    const reg = new RegExp(
+      String.raw({
+        raw: `(^\\s|^)${escapeRegExp(this.props.mentionTrigger)}`, // eslint-disable-line no-useless-escape
+      })
+    );
+    const mentionTextLowered = text.replace(reg, '').toLowerCase();
+    return this.props.suggestions.find(
+      possibleMention =>
+        possibleMention.name.toLowerCase() === mentionTextLowered
+    );
   };
 
   openDropdown = () => {
@@ -359,6 +432,9 @@ export class MentionSuggestions extends Component {
           onMentionSelect={this.onMentionSelect}
           onMentionFocus={this.onMentionFocus}
           isFocused={this.state.focusedOptionIndex === index}
+          isFocusedByArrow={
+            this.state.focusedByArrow && this.state.focusedOptionIndex === index
+          }
           mention={mention}
           index={index}
           id={`mention-option-${this.key}-${index}`}

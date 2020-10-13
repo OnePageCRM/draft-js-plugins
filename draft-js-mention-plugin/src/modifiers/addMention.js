@@ -23,11 +23,15 @@ const addMention = (
     mentionTrigger
   );
 
+  const alwaysAddSpace = true;
+
   // get selection of the @mention search text
   const mentionTextSelection = currentSelectionState.merge({
     anchorOffset: begin,
     focusOffset: end,
   });
+
+  const currentInlineStyle = editorState.getCurrentInlineStyle();
 
   let mentionReplacedContent = Modifier.replaceText(
     editorState.getCurrentContent(),
@@ -44,7 +48,8 @@ const addMention = (
     .getCurrentContent()
     .getBlockForKey(blockKey)
     .getLength();
-  if (blockSize === end) {
+
+  if (alwaysAddSpace || blockSize === end) {
     mentionReplacedContent = Modifier.insertText(
       mentionReplacedContent,
       mentionReplacedContent.getSelectionAfter(),
@@ -57,9 +62,15 @@ const addMention = (
     mentionReplacedContent,
     'insert-mention'
   );
-  return EditorState.forceSelection(
+
+  const newEditorStateWithSelection = EditorState.forceSelection(
     newEditorState,
     mentionReplacedContent.getSelectionAfter()
+  );
+
+  return EditorState.setInlineStyleOverride(
+    newEditorStateWithSelection,
+    currentInlineStyle
   );
 };
 
