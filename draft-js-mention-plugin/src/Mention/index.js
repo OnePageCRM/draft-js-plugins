@@ -25,9 +25,11 @@ const Mention = props => {
   } = props;
 
   const mention = contentState.getEntity(entityKey).getData().mention;
-  const combinedClassName = clsx(theme.mention, className, {
-    'mention-disabled': mention.disabled,
-  });
+  //const combinedClassName = clsx(theme.mention, className, {
+  //  'mention-disabled': mention.disabled,
+  //});
+
+  const combinedClassName = clsx(theme.mention, className);
 
   const Component =
     mentionComponent || (mention.link ? MentionLink : MentionText);
